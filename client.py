@@ -1,6 +1,5 @@
 
 from typing import Text
-from UI_MAIN import Ui_MainWindow
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
@@ -86,7 +85,7 @@ class RunTranslate(QThread):
 
 
             if not os.path.isdir(dst_dir): os.mkdir(dst_dir)
-
+            
             d.pull(transed_jpg, f'{dst_dir}\\transed_{os.path.basename(j)}')
 
             d.shell(f'rm -rf {transed_jpg} /sdcard/Pictures/{os.path.basename(j)}')
@@ -96,7 +95,7 @@ class RunTranslate(QThread):
 
             self.window.f_log_browser.append(f'{dst_dir}\\transed_{os.path.basename(j)} 에 저장되었습니다.')
             self.changeValue.emit(int(100* (i+1)/len(imageList)))
-
+            self.window.f_log_browser.verticalScrollBar().setValue(self.window.f_log_browser.verticalScrollBar().maximum())
 
 
         self.window.f_log_browser.append('\n번역 완료!')

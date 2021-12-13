@@ -7,9 +7,7 @@ import qdarkstyle, os
 from client import RunTranslate
 
 
-fromLanguage = ['언어감지', '한국어', '영어', '중국어(간체)', '일본어', '베트남어', '태국어', '중국어(번체)', '스페인어', '프랑스어', '인도네시아어', '러시아어', '독일어', '이탈리아어']
-toLanguage = ['한국어', '영어', '중국어(간체)', '일본어', '베트남어', '태국어', '중국어(번체)', '스페인어', '프랑스어', '인도네시아어', '러시아어', '독일어', '이탈리아어']
-
+languageList = ['한국어', '영어', '중국어(간체)', '일본어', '베트남어', '태국어', '중국어(번체)', '스페인어', '프랑스어', '인도네시아어', '러시아어', '독일어', '이탈리아어']
 
 
 class PIT4ADB(QMainWindow, Ui_MainWindow):
@@ -28,10 +26,14 @@ class PIT4ADB(QMainWindow, Ui_MainWindow):
         self.rt = RunTranslate(self)
         self.rt.changeValue.connect(self.progressBar.setValue)
 
-        for f in fromLanguage: self.fromLang.addItem(f)
-        for t in toLanguage: self.toLang.addItem(t)
+        self.fromLang.addItems(['언어감지']+languageList)
+        self.toLang.addItems(languageList)
+
+        self.setWindowIcon(QIcon('./utils/sayo.ico'))
 
         self.show()
+
+
 
 
     def runTrans(self):
@@ -58,6 +60,8 @@ class PIT4ADB(QMainWindow, Ui_MainWindow):
 
 if __name__ == '__main__':
     import sys
+    import ctypes
+    ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
     app = QApplication(sys.argv)
     pit4adb = PIT4ADB()
     app.exec_()
